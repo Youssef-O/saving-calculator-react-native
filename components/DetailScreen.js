@@ -3,13 +3,16 @@ import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, View} from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 
-const fill = 75;
-function DetailScreen() {
+
+function DetailScreen({route}) {
+
+    const {itemName, targetDate, dailySavingGoal, weeklySavingGoal, monthlySavingGoal, progressInPercentage} = route.params;
+    
   return (
     <View style={styles.container}>
       <View style={styles.targetDate}>
         <Text style={styles.h1}>Target Date</Text>
-        <Text style={styles.h3}>01/01/2021</Text>
+        <Text style={styles.h3}>{targetDate}</Text>
       </View>
       <View>
         <AnimatedCircularProgress
@@ -17,30 +20,39 @@ function DetailScreen() {
           rotation={360}
           size={210}
           width={21}
-          fill={75}
+          fill={progressInPercentage}
           tintColor="#FFD700"
           onAnimationComplete={() => console.log('onAnimationComplete')}
           backgroundColor="#75753d"
-        />
+        >
+            {
+                (fill) => (
+                    <Text style={styles.progressInPercentage}>
+                        {progressInPercentage}%
+                    </Text>
+                )
+            }
+        </AnimatedCircularProgress>
       </View>
       <View style={styles.savingsSection}>
         <Text style={styles.savingsNeedsText}>Savings Needs</Text>
         <View style={styles.savingsNeeds}>
           <View>
             <Text style={styles.h2}>Daily</Text>
-            <Text style={styles.h3}>$8.00</Text>
+            <Text style={styles.h3}>${dailySavingGoal}</Text>
           </View>
           <View>
             <Text style={styles.h2}>Weekly</Text>
-            <Text style={styles.h3}>$60.00</Text>
+            <Text style={styles.h3}>${weeklySavingGoal}</Text>
           </View>
           <View>
             <Text style={styles.h2}>Monthly</Text>
-            <Text style={styles.h3}>$100.00</Text>
+            <Text style={styles.h3}>${monthlySavingGoal}</Text>
           </View>
         </View>
       </View>
       <StatusBar style="auto" />
+      {console.log(itemName)}
     </View>
   );
 };
@@ -60,7 +72,12 @@ const styles = StyleSheet.create({
 
   ProgressBar: {
     alignSelf: 'center',
-    marginTop: 50,
+    marginTop: 54,
+  },
+
+  progressInPercentage: {
+    color: 'white',
+    fontSize: 50,
   },
   
   savingsSection: {

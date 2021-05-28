@@ -6,12 +6,66 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 function HomeScreen({navigation}) {
   
-    const [date, setDate] = useState(new Date(1598051730000));
+    const [itemName, setItemName] = useState('');
+    const [itemCost, setItemCost] = useState('');
+    const [amountSaved, setAmountSaved] = useState('');
+    const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
+    const {DateTime} = require("luxon");
   
     const showDatepicker = () => {
-      setShow(true);
+        setShow(true);
     };
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate || date;
+        setDate(currentDate);
+    };
+
+    const calculateSavingsGoals = () => {
+        // console.log(itemName);
+        // console.log(itemCost);
+        // console.log(amountSaved);
+        // console.log(date);
+
+        const totalAmountToSave = itemCost - amountSaved;
+
+        const currentDate = new Date();
+
+        const durationInMilliseconds = date - currentDate;
+        const durationInDays = durationInMilliseconds/(8.64e+7);
+        const durationInWeeks = durationInDays/7;
+        const durationInMonths = durationInWeeks/4.345;
+
+        const dailySavingGoal = (totalAmountToSave/durationInDays).toFixed(2);
+        const weeklySavingGoal = (totalAmountToSave/durationInWeeks).toFixed(2);
+        const monthlySavingGoal = (totalAmountToSave/durationInMonths).toFixed(2);
+
+        const progressInPercentage = (amountSaved * 100) / itemCost;
+
+        // console.log('Saving Durations');
+        // console.log(durationInMilliseconds);
+        // console.log(durationInDays);
+        // console.log(durationInWeeks);
+        // console.log(durationInMonths);
+
+        // console.log('Saving Goals');
+        // console.log(dailySavingGoal);
+        // console.log(weeklySavingGoal);
+        // console.log(monthlySavingGoal);
+
+        // console.log('Progress in percentage:');
+        // console.log(progressInPercentage);
+        
+        navigation.navigate('Detail', {
+            itemName: itemName,
+            targetDate: DateTime.fromJSDate(date).toFormat('dd/MM/yyyy'),
+            progressInPercentage: progressInPercentage,
+            dailySavingGoal: dailySavingGoal,
+            weeklySavingGoal: weeklySavingGoal,
+            monthlySavingGoal: monthlySavingGoal,
+        });
+    } 
   
     return (
       <View style={styles.container}>
@@ -19,18 +73,24 @@ function HomeScreen({navigation}) {
           placeholder="Item Name"
           placeholderTextColor="#A9A9A9"
           style={styles.input}
+          onChangeText={(itemName) => setItemName(itemName)}
+          value={itemName}
         />
         <TextInput
           placeholder="Item Cost"
           placeholderTextColor="#A9A9A9"
           style={styles.input}
           keyboardType="numeric"
+          onChangeText={(itemCost) => setItemCost(itemCost)}
+          value={itemCost}
         />
         <TextInput
           placeholder="Amount Saved"
           placeholderTextColor="#A9A9A9"
           style={styles.input}
           keyboardType="numeric"
+          onChangeText={(amountSaved) => setAmountSaved(amountSaved)}
+          value={amountSaved}
         />
         <TouchableOpacity
           style={styles.dateButton}
@@ -42,15 +102,17 @@ function HomeScreen({navigation}) {
         {show && (
           <DateTimePicker
             testID="dateTimePicker"
+            minimumDate={new Date()}
             value={date}
             mode='date'
             is24Hour={true}
             display="default"
+            onChange={onChange}
           />
         )}
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Detail')}
+          onPress={calculateSavingsGoals}
         >
           <Text style={styles.text}>Calculate</Text>
         </TouchableOpacity>
