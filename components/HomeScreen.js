@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import {StyleSheet, Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -12,9 +12,14 @@ function HomeScreen({navigation}) {
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
     const {DateTime} = require("luxon");
-  
+
+    useEffect(() => {
+      setShow(false);
+    })
+    
     const showDatepicker = () => {
         setShow(true);
+        console.log("Date Picker State: " + show);
     };
 
     const onChange = (event, selectedDate) => {
@@ -23,10 +28,6 @@ function HomeScreen({navigation}) {
     };
 
     const calculateSavingsGoals = () => {
-        // console.log(itemName);
-        // console.log(itemCost);
-        // console.log(amountSaved);
-        // console.log(date);
 
         const totalAmountToSave = itemCost - amountSaved;
 
@@ -43,19 +44,8 @@ function HomeScreen({navigation}) {
 
         const progressInPercentage = (amountSaved * 100) / itemCost;
 
-        // console.log('Saving Durations');
-        // console.log(durationInMilliseconds);
-        // console.log(durationInDays);
-        // console.log(durationInWeeks);
-        // console.log(durationInMonths);
-
-        // console.log('Saving Goals');
-        // console.log(dailySavingGoal);
-        // console.log(weeklySavingGoal);
-        // console.log(monthlySavingGoal);
-
-        // console.log('Progress in percentage:');
-        // console.log(progressInPercentage);
+        console.log('Progress in percentage:');
+        console.log(progressInPercentage);
         
         navigation.navigate('Detail', {
             itemName: itemName,
