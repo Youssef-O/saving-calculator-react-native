@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "saving-calculator-react-native",
-    "slug": "saving-calculator-react-native",
+    "name": "Saving Calculator",
+    "slug": "saving-calculator",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/money-bag.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
