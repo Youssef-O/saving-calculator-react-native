@@ -1,14 +1,14 @@
 {
   "expo": {
-    "name": "Saving Calculator",
-    "slug": "saving-calculator",
+    "name": "Savings Calculator",
+    "slug": "savings-calculator",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/money-bag.png",
+    "icon": "./assets/app-icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/app-splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#313131"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -20,9 +20,11 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.yssf.savingscalculator",
+      "versionCode": 1,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/app-adaptive-icon.png",
+        "backgroundColor": "#313131"
       }
     },
     "web": {
